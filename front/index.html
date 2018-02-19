@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./style.css">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Myspace</title>
+</head>
+<body>
+<div id="app">
+  <div id="header">
+    <div class="wrapper" id="header-section">
+      <span id="user-name">Hello Ross!</span>
+      <textarea v-model="newPost.body"></textarea>
+      <button type="button" v-on:click="createPost">submit</button>
+    </div>
+  </div>
+  <div id="main">
+    <div class="wrapper" id="main-section">
+      <div id="post-section">
+        <h1>User's Posts</h1>
+        <hr>
+        <ul class="threads">
+          <li class="thread" v-for="post in posts">
+            <div class="post-div">
+              <span class="post-owner">
+                Post Owner
+              </span>
+              <span class="post-body">
+                {{ post.body }}
+              </span>
+            </div>
+            <ul class="comments" v-for="comment in comments">
+              <li class="comment" v-if="comment.post_id == post._id">
+                <div class="comment-div">
+                  <span class="comment-owner">
+                    comment owner
+                  </span>
+                  <span class="comment-body">
+                    {{ comment.body }}
+                  </span>
+                </div>
+              </li>
+            </ul>
+            <div>
+              <div class="add-comment-active">
+                <textarea v-model="newComment.body"></textarea>
+                <button v-on:click="createComment(post)">Add Comment</button>
+                <button>Cancel</button>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div id="users-section">
+        <h1>Friends List</h1>
+        <hr>
+        <ul>
+          <li>Friend 1</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="vue.js"></script>
+<script src="myspace.js"></script>
+</body>
+</html>

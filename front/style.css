@@ -1,0 +1,72 @@
+body{
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+.wrapper{
+  margin: 0 auto;
+  width: 95%;
+}
+
+#header{
+  background-color: blue;
+  padding: 10px 0;
+}
+
+#main-section{
+  display: flex;
+}
+
+#post-section{
+  height: 95vh;
+  width: 80%;
+  overflow: scroll;
+}
+
+#users-section{
+  height: 95vh;
+  width: 20%;
+}
+
+hr{
+  width: 90%;
+  margin-left: 0;
+}
+
+ul{
+  list-style: none;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+li{
+  margin-left: 0;
+}
+
+.thread{
+  width: 75%;
+  padding: 25px 15px;
+  background-color: #ADDCCA;
+  border-radius: 5px;
+  margin-top: 25px;
+}
+
+.post-div{
+  min-height: 150px;
+}
+
+.post-body{
+  margin-left: 25px;
+}
+
+.comment-div{
+  min-height: 50px;
+}
+
+.comment-body{
+  margin-left: 25px;
+}
+
+.add-comment-div{
+  display: flex;
+}
