@@ -32,22 +32,27 @@ const app = new Vue({
       sendData(this.newPost);
       this.newPost = "";
     },
-    createComment: function (data) {
-      sendComment(data._id, this.newComment.body);
-      this.newComment.body = "";
+    createComment: function (post) {
+      sendComment(post._id, post.newComment);
+      post.newComment = "";
+    },
+    delPost: function (post) {
+      // deletePost(post._id);
+      console.log(post._id)
     }
   },
   created: function () {
     fetchPosts().then(function (data) {
-      app.posts = data
+      app.posts = data;
     });
-    fetchComments().then(function (data) {
-      app.comments = data
+    fetchComments().then(function (comments) {
+      app.comments = comments;
     });
   }
 });
 
 var sendData = function (postBody) {
+  console.log("Creating Post");
   var encodedBody = 'postBody=' + postBody.body;
   fetch('http://localhost:8080/posts', {
     body: encodedBody,
@@ -58,7 +63,6 @@ var sendData = function (postBody) {
   }).then(function (response) {
     if (response.status == 201) {
         response.json().then(function (data) {
-          console.log(data)
           app.posts.push(data)
         });
     } else {
@@ -68,6 +72,7 @@ var sendData = function (postBody) {
 };
 
 var sendComment = function (id, commentBody) {
+  console.log("creating comment");
   var encodedBody = 'commentBody=' + commentBody + '&post_id=' + id;
   fetch('http://localhost:8080/comments', {
     body: encodedBody,
@@ -78,7 +83,7 @@ var sendComment = function (id, commentBody) {
   }).then(function (response) {
     if (response.status == 201) {
         response.json().then(function (data) {
-          app.posts.push(data)
+          app.comments.push(data)
         });
     } else {
       console.log ("Error Code:", response.status);

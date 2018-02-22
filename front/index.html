@@ -19,8 +19,6 @@
   <div id="main">
     <div class="wrapper" id="main-section">
       <div id="post-section">
-        <h1>User's Posts</h1>
-        <hr>
         <ul class="threads">
           <li class="thread" v-for="post in posts">
             <div class="post-div">
@@ -30,6 +28,7 @@
               <span class="post-body">
                 {{ post.body }}
               </span>
+              <button type="button" v-on:click="delPost(post)">Delete</button>
             </div>
             <ul class="comments" v-for="comment in comments">
               <li class="comment" v-if="comment.post_id == post._id">
@@ -45,19 +44,12 @@
             </ul>
             <div>
               <div class="add-comment-active">
-                <textarea v-model="newComment.body"></textarea>
+                <textarea v-model="post.newComment"></textarea>
                 <button v-on:click="createComment(post)">Add Comment</button>
                 <button>Cancel</button>
               </div>
             </div>
           </li>
-        </ul>
-      </div>
-      <div id="users-section">
-        <h1>Friends List</h1>
-        <hr>
-        <ul>
-          <li>Friend 1</li>
         </ul>
       </div>
     </div>
