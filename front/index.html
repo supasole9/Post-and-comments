@@ -22,31 +22,37 @@
         <ul class="threads">
           <li class="thread" v-for="post in posts">
             <div class="post-div">
-              <span class="post-owner">
+              <div class="post-owner">
                 Post Owner
-              </span>
-              <span class="post-body">
+              </div>
+              <div class="post-body" v-if="post.editing == false">
                 {{ post.body }}
-              </span>
-              <button type="button" v-on:click="delPost(post)">Delete</button>
+              </div>
+              <textarea v-if="post.editing == true"> {{ post.body }}</textarea>
+              <div class="move-left">
+                <button type="button" v-on:click="delPost(post)">Delete</button>
+                <button type="button" v-on:click="toggleEdit(post)">Edit</button>
+            </div>
             </div>
             <ul class="comments" v-for="comment in comments">
               <li class="comment" v-if="comment.post_id == post._id">
                 <div class="comment-div">
-                  <span class="comment-owner">
+                  <div class="comment-owner">
                     comment owner
-                  </span>
-                  <span class="comment-body">
+                  </div>
+                  <div class="comment-body">
                     {{ comment.body }}
-                  </span>
+                  </div>
+                  <div class="move-left">
+                    <button type="button" v-on:click="delComment(comment)">Delete</button>
+                  </div>
                 </div>
               </li>
             </ul>
             <div>
               <div class="add-comment-active">
-                <textarea v-model="post.newComment"></textarea>
+                <textarea class="add-comment" v-model="post.newComment"></textarea>
                 <button v-on:click="createComment(post)">Add Comment</button>
-                <button>Cancel</button>
               </div>
             </div>
           </li>

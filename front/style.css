@@ -1,7 +1,12 @@
+*, *::after, *::before{
+  box-sizing: border-box;
+}
+
 body{
   margin: 0;
   height: 100vh;
   overflow: hidden;
+  background-color: #CBDBD7;
 }
 .wrapper{
   margin: 0 auto;
@@ -9,23 +14,22 @@ body{
 }
 
 #header{
-  background-color: blue;
+  background-color: #193441;
   padding: 10px 0;
+  color: white;
 }
 
-#main-section{
+#header-section{
   display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 #post-section{
-  height: 95vh;
-  width: 80%;
+  height: 650px;
+  width: 100;
+  margin: 0 auto;
   overflow: scroll;
-}
-
-#users-section{
-  height: 95vh;
-  width: 20%;
 }
 
 hr{
@@ -43,30 +47,78 @@ li{
   margin-left: 0;
 }
 
-.thread{
-  width: 75%;
-  padding: 25px 15px;
-  background-color: #ADDCCA;
+textarea{
+  height: 50px;
+  padding: 5px;
+  width: 50%;
+  resize: none;
+  border: 0;
   border-radius: 5px;
-  margin-top: 25px;
+}
+
+.thread{
+  width: 60%;
+  margin: 0 auto;
+  background-color: #fff;
+  border-radius: 5px;
+  margin-bottom: 25px;
 }
 
 .post-div{
+  padding: 15px;
   min-height: 150px;
+  width: 100%;
+  background-color: #91AAB4;
+  display: flex;
+}
+
+.post-owner{
+  width: 75px;
 }
 
 .post-body{
   margin-left: 25px;
+  min-width: 500px;
+}
+
+.post-div button, .comment-div button{
+  height: 25px;
+  padding: 5px;
+  margin-right: 5px;
+}
+
+.move-left{
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .comment-div{
+  display: flex;
+  padding: 15px;
   min-height: 50px;
 }
 
+.comment-owner{
+  width: 75px;
+}
 .comment-body{
   margin-left: 25px;
+  width: 70%;
 }
 
-.add-comment-div{
+.add-comment-active{
+  padding: 5px 15px;
   display: flex;
+  background-color: #3E606F;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.add-comment{
+  width: 80%;
+  height: 25px;
+  padding: 5px;
+  border-radius: 100px;
+
 }

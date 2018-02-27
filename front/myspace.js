@@ -14,12 +14,13 @@ const app = new Vue({
   el: "#app",
   data: {
     users: [],
-    posts: [],
+      posts: [],
     comments: [],
     newUser: {
       name: "",
       body: "",
     },
+    editing: false,
     newPost: {
       body: ""
     },
@@ -37,8 +38,16 @@ const app = new Vue({
       post.newComment = "";
     },
     delPost: function (post) {
-      // deletePost(post._id);
-      console.log(post._id)
+      deletePost(post._id);
+    },
+    delComment: function (comment) {
+      deleteComment(comment._id)
+    },
+    toggleEdit: function (post) {
+      post.editing = !post.editing;
+      console.log(post.editing)
+      // this.editing = !this.editing;
+      // console.log(this.editing)
     }
   },
   created: function () {
@@ -91,4 +100,38 @@ var sendComment = function (id, commentBody) {
   }).then(fetchComments().then(function (data) {
     app.comments = data
   }));
+};
+
+var deletePost = function (id) {
+  fetch('http://localhost:8080/posts/'+ id, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  }).then(function (response) {
+    if (response.status == 204) {
+      fetchPosts().then(function (data) {
+        app.posts = data;
+      })
+    } else {
+      console.log ("Error Code:", response.status);
+    };
+  })
+};
+
+var deleteComment = function (id) {
+  fetch('http://localhost:8080/comments/'+ id, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  }).then(function (response) {
+    if (response.status == 204) {
+      fetchComments().then(function (data) {
+        app.comments = data;
+      })
+    } else {
+      console.log ("Error Code:", response.status);
+    };
+  })
 }

@@ -11,8 +11,7 @@ const postSchema = new Schema ({
   body: {
     type: String,
     required: true
-  },
-  comments: []
+  }
 });
 
 var Post = mongoose.model("Posts", postSchema)
