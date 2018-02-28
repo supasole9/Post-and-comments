@@ -16,21 +16,18 @@ app.use(function(req, res, next) {
 });
 
 app.get("/posts", function (req, res) {
-  res.set('Access-Control-Allow-Origin', '*');
   postModel.Post.find().then(function (posts) {
    res.json(posts);
  })
 });
 
 app.get("/comments", function (req, res) {
-  res.set('Access-Control-Allow-Origin', '*');
   commentModel.Comment.find().then(function (posts) {
    res.json(posts);
  })
 });
 
 app.post("/users", function(req, res) {
-  res.set('Access-Control-Allow-Origin', '*');
   var user = new userModel.User ({
     fname: req.body.fname,
     lname: req.body.lname
@@ -41,7 +38,6 @@ app.post("/users", function(req, res) {
 });
 
 app.post("/comments", function(req, res) {
-  res.set('Access-Control-Allow-Origin', '*');
   var comment = new commentModel.Comment ({
     belongs_to: "1",
     post_id: req.body.post_id,
@@ -58,15 +54,16 @@ app.post("/posts", function(req, res) {
     body: req.body.postBody
   });
   post.save().then(function () {
-    res.set('Access-Control-Allow-Origin', '*');
     res.status(201).json(post);
   })
 });
 
 app.delete("/posts/:postId", function (req, res) {
-  res.set('Access-Control-Allow-Origin', '*');
   postModel.Post.remove({_id: req.params.postId}, function(err) {
-    console.log("error here")
+    if (err) {
+      console.log("error here: Deleting comment")
+      res.sendStatus(500).json("Error Deleting Comment");
+    }
   }).then(function () {
     res.sendStatus(204);
   })
@@ -74,31 +71,38 @@ app.delete("/posts/:postId", function (req, res) {
 
 app.delete("/comments/:commentId", function (req, res) {
   commentModel.Comment.remove({_id: req.params.commentId}, function(err) {
-    console.log("error here")
+    if (err) {
+      console.log("error here: Deleting comment")
+      res.sendStatus(500).json("Error Deleting Comment");
+    }
   }).then(function () {
-    res.set('Access-Control-Allow-Origin', '*');
     res.sendStatus(204);
   })
 });
 
 app.put("/comments/:commentId", function (req, res) {
   commentModel.Comment.findById({ _id: req.params.commentId}, function(err, Comment) {
-    Comment.body = req.body.commentBody;
-    Comment.save()
+    if (err) {
+      console.log ("error")
+    } else {
+      Comment.body = req.body.commentBody;
+      Comment.save()
+    }
   }).then(function (Comment) {
-    res.set('Access-Control-Allow-Origin', '*');
-    res.status(201).json(Comment);
+    res.status(202).json(Comment);
   })
 });
 
 app.put("/posts/:postId", function (req, res) {
-  console.log(req.body);
-  res.set('Access-Control-Allow-Origin', '*');
   postModel.Post.findById({ _id: req.params.postId}, function(err, Post) {
-    Post.body = req.body.postBody;
-    Post.save()
+    if (err) {
+      console.log("error Putting Post")
+    } else {
+      Post.body = req.body.postBody;
+      Post.save()
+    }
   }).then(function (Post) {
-    res.status(200).json(Post);
+    res.status(202).json(Post);
   })
 });
 
