@@ -3,6 +3,7 @@
 }
 
 body{
+  font-family: 'Source Sans Pro', sans-serif;
   margin: 0;
   height: 100vh;
   overflow: hidden;
@@ -19,10 +20,23 @@ body{
   color: white;
 }
 
+#header-profile{
+  display: flex;
+  align-items: center;
+}
+
+#header-profile span{
+  margin-left: 5px;
+}
+
 #header-section{
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+#header-section textarea{
+  margin-left: -85px;
 }
 
 #post-section{
@@ -72,13 +86,22 @@ textarea{
   display: flex;
 }
 
-.post-owner{
-  width: 75px;
+.post-owner div{
+  margin-bottom: 3px;
+  margin-left: 10px;
+  width: 300px;
 }
 
-.post-body{
-  margin-left: 25px;
-  min-width: 500px;
+.post-owner textarea{
+  margin-left: 10px;
+  width: 300px;
+}
+
+.display-flex{
+  display: flex;
+  justify-content: space-between;
+  background-color: #91AAB4;
+  padding-bottom: 15px;
 }
 
 .post-div button, .comment-div button{
@@ -91,6 +114,22 @@ textarea{
   width: 100%;
   display: flex;
   justify-content: flex-end;
+  margin-right: 25px;
+}
+
+.move-right{
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 25px;
+}
+
+.move-left button{
+  margin-left: 10px;
+}
+
+.move-right button{
+  margin-right: 10px;
 }
 
 .comment-div{
@@ -100,19 +139,38 @@ textarea{
 }
 
 .comment-owner{
-  width: 75px;
+  width: 100%;
+  margin-left: 10px;
 }
 .comment-body{
   margin-left: 25px;
   width: 70%;
 }
 
+.comment-owner-span{
+  color: #16587F;
+}
+
 .add-comment-active{
+  min-height: 70px;
   padding: 5px 15px;
   display: flex;
   background-color: #3E606F;
   justify-content: space-around;
   align-items: center;
+}
+
+.add-comment-active textarea{
+  padding-left: 25px;
+  padding-top: 15px;
+  min-height: 43px;
+  width: 65%;
+}
+
+.add-comment-active button{
+  height: 24px;
+  width: 61px;
+  border: 0;
 }
 
 .add-comment{

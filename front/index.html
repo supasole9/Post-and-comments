@@ -5,14 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./style.css">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
   <title>Myspace</title>
 </head>
 <body>
 <div id="app">
   <div id="header">
     <div class="wrapper" id="header-section">
-      <span id="user-name">Hello Ross!</span>
-      <textarea v-model="newPost.body"></textarea>
+      <div id="header-profile">
+        <img src="./images/profile.png" style="height: 50px; width: auto" alt="profile">
+        <span id="user-name">Hello Ross!</span>
+      </div>
+      <textarea placeholder="New Post Here" v-model="newPost.body"></textarea>
       <button type="button" v-on:click="createPost">submit</button>
     </div>
   </div>
@@ -22,37 +26,45 @@
         <ul class="threads">
           <li class="thread" v-for="post in posts">
             <div class="post-div">
+              <img src="./images/profile.png" style="height: 50px; width: auto" alt="profile">
               <div class="post-owner">
-                Post Owner
+                <div>Post Owner</div>
+                <div>{{ post.created }}</div>
+                <textarea v-if="post.editing"  v-model="post.body"> {{ post.body }}</textarea>
+                <div v-else>{{ post.body }}</div>
               </div>
-              <div class="post-body" v-if="post.editing == false">
-                {{ post.body }}
+            </div>
+            <div class="display-flex">
+              <div class="move-right">
+                <button type="button" v-on:click.once="addLike(post)"> {{ post.likes }} Like</button>
+                <button type="button" v-on:click.once="addDislike(post)">{{ post.dislikes }} Dislike</button>
               </div>
-              <textarea v-if="post.editing == true"> {{ post.body }}</textarea>
               <div class="move-left">
                 <button type="button" v-on:click="delPost(post)">Delete</button>
                 <button type="button" v-on:click="toggleEdit(post)">Edit</button>
-            </div>
+              </div>
             </div>
             <ul class="comments" v-for="comment in comments">
               <li class="comment" v-if="comment.post_id == post._id">
                 <div class="comment-div">
+                  <img src="./images/profile.png" style="height: 50px; width: auto" alt="profile">
                   <div class="comment-owner">
-                    comment owner
+                    <span class="comment-owner-span">comment owner</span>
+                    <span class="comment-body-span">{{ comment.body }}</span>
                   </div>
-                  <div class="comment-body">
-                    {{ comment.body }}
+                  <div>
+                    {{ comment.created }}
                   </div>
+                </div>
                   <div class="move-left">
                     <button type="button" v-on:click="delComment(comment)">Delete</button>
                   </div>
-                </div>
               </li>
             </ul>
             <div>
               <div class="add-comment-active">
-                <textarea class="add-comment" v-model="post.newComment"></textarea>
-                <button v-on:click="createComment(post)">Add Comment</button>
+                <textarea class="add-comment" placeholder="Add Comment" v-model="post.newComment"></textarea>
+                <button v-on:click="createComment(post)">Post</button>
               </div>
             </div>
           </li>
