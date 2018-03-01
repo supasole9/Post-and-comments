@@ -10,6 +10,18 @@ const postSchema = new Schema ({
   },
   body: {
     type: String,
+    required: [true, "Body text is required"]
+  },
+  likes: {
+    type: Number,
+    default: 0
+  },
+  dislikes: {
+    type: Number,
+    default: 0
+  },
+  created: {
+    type: String,
     required: true
   }
 });

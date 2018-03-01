@@ -14,8 +14,20 @@ const commentSchema = new Schema ({
   },
   body: {
     type: String,
-    required: true
+    required: [true, "Body Text is required!" ]
   },
+  likes: {
+    type: Number,
+    default: 0
+  },
+  dislikes: {
+    type: Number,
+    default: 0
+  },
+  created: {
+    type: String,
+    required: true
+  }
 });
 
 var Comment = mongoose.model("Comments", commentSchema);
