@@ -40,7 +40,7 @@ const app = new Vue({
         return
       } else{
         sendData(this.newPost);
-        this.newPost = "";
+        this.newPost.body = "";
       }
     },
     createComment: function (post) {
@@ -66,15 +66,22 @@ const app = new Vue({
       }
     },
     toggleEdit: function (post) {
-      if (post.editing) {
-        post.editing = false;
-      } else {
+      if (!post.editing) {
         post.editing = true;
+      } else {
+        post.editing = false;
       }
       // post.editing = !post.editing;
-      console.log(post)
-      // this.editing = !this.editing;
-      // console.log(this.editing)
+      app.posts.forEach((i, x) => {
+        if(i._id == post._id){
+          console.log("posts old", app.posts[x], post)
+          app.posts[x]= post;
+          console.log("posts new", app.posts[x], post)
+        }
+      })
+      // app.posts._id[post._id]
+      // console.log(post);
+      // console.log(post.editing)
     },
     addPostLike: function (post) {
         newPostLike(post._id)
