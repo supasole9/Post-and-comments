@@ -27,6 +27,12 @@ app.get("/comments", function (req, res) {
  })
 });
 
+app.get("/users", function (req, res) {
+  userModel.User.find().then(function (users) {
+   res.json(users);
+ })
+});
+
 app.post("/users", function(req, res) {
   var user = new userModel.User ({
     fname: req.body.fname,
@@ -39,7 +45,7 @@ app.post("/users", function(req, res) {
 
 app.post("/comments", function(req, res) {
   var comment = new commentModel.Comment ({
-    belongs_to: "1",
+    belongs_to: "5a97700d470a8a1aa589e0ce",
     post_id: req.body.post_id,
     body: req.body.commentBody,
     created: req.body.created
@@ -51,7 +57,7 @@ app.post("/comments", function(req, res) {
 
 app.post("/posts", function(req, res) {
   var post = new postModel.Post ({
-    belongs_to: 1,
+    belongs_to: "5a97700d470a8a1aa589e0ce",
     body: req.body.postBody,
     created: req.body.created
   });
@@ -85,14 +91,22 @@ app.delete("/comments/:commentId", function (req, res) {
 app.put("/comments/:commentId", function (req, res) {
   commentModel.Comment.findById({ _id: req.params.commentId}, function(err, Comment) {
     if (err) {
-      console.log ("error PUTTING comments");
-      res.sendStatus(404).json("error PUTTING comments");
+      console.log ("error PUTTING posts");
+      res.sendStatus(404).json("error PUTTING posts");
     } else {
-      Comment.body = req.body.commentBody;
-      Comment.save()
+      if (req.body.like) {
+        Comment.likes += 1;
+        Comment.save()
+        res.status(202).json(Comment);
+      } else if (req.body.dislike) {
+        Comment.dislikes += 1;
+        Comment.save()
+        res.status(202).json(Comment);
+      } else {
+        console.log ("can't add like or dislike");
+        res.sendStatus(404).json("Cant Add like or dislike");
+      }
     }
-  }).then(function (Comment) {
-    res.status(202).json(Comment);
   })
 });
 

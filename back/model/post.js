@@ -5,7 +5,7 @@ mongoose.connect("mongodb://test:dummy@ds235418.mlab.com:35418/myspace");
 
 const postSchema = new Schema ({
   belongs_to: {
-    type: Number,
+    type: String,
     required: true
   },
   body: {

@@ -73,9 +73,14 @@ textarea{
 .thread{
   width: 60%;
   margin: 0 auto;
-  background-color: #fff;
+  background-color: #193441;
   border-radius: 5px;
   margin-bottom: 25px;
+}
+
+.comment{
+  background-color: #fff;
+  margin-bottom: 1px;
 }
 
 .post-div{
@@ -101,6 +106,13 @@ textarea{
   display: flex;
   justify-content: space-between;
   background-color: #91AAB4;
+  padding-bottom: 15px;
+}
+
+.display-flex-comment{
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
   padding-bottom: 15px;
 }
 
@@ -145,6 +157,11 @@ textarea{
 .comment-body{
   margin-left: 25px;
   width: 70%;
+}
+
+.created{
+  width: 100px;
+  font-size: .8rem;
 }
 
 .comment-owner-span{

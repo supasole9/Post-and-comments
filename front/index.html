@@ -28,16 +28,18 @@
             <div class="post-div">
               <img src="./images/profile.png" style="height: 50px; width: auto" alt="profile">
               <div class="post-owner">
-                <div>Post Owner</div>
-                <div>{{ post.created }}</div>
+                <div v-for="user in users">
+                  <span v-if="user._id == post.belongs_to">{{ user.fname }} {{ user.lname }}</span>
+                </div>
+                <div class="created">{{ post.created }}</div>
                 <textarea v-if="post.editing"  v-model="post.body"> {{ post.body }}</textarea>
                 <div v-else>{{ post.body }}</div>
               </div>
             </div>
             <div class="display-flex">
               <div class="move-right">
-                <button type="button" v-on:click.once="addLike(post)"> {{ post.likes }} Like</button>
-                <button type="button" v-on:click.once="addDislike(post)">{{ post.dislikes }} Dislike</button>
+                <button type="button" v-on:click.once="addPostLike(post)"> {{ post.likes }} Like</button>
+                <button type="button" v-on:click.once="addPostDislike(post)">{{ post.dislikes }} Dislike</button>
               </div>
               <div class="move-left">
                 <button type="button" v-on:click="delPost(post)">Delete</button>
@@ -49,16 +51,24 @@
                 <div class="comment-div">
                   <img src="./images/profile.png" style="height: 50px; width: auto" alt="profile">
                   <div class="comment-owner">
-                    <span class="comment-owner-span">comment owner</span>
+                    <div v-for="user in users">
+                      <span class="comment-owner-span" v-if="user._id == comment.belongs_to">{{ user.fname }} {{ user.lname }}</span>
+                    </div>
                     <span class="comment-body-span">{{ comment.body }}</span>
                   </div>
-                  <div>
+                  <div class="created">
                     {{ comment.created }}
                   </div>
                 </div>
+                <div class="display-flex-comment">
+                  <div class="move-right">
+                    <button type="button" v-on:click.once="addCommentLike(comment)"> {{ comment.likes }} Like</button>
+                    <button type="button" v-on:click.once="addCommentDislike(comment)">{{ comment.dislikes }} Dislike</button>
+                  </div>
                   <div class="move-left">
                     <button type="button" v-on:click="delComment(comment)">Delete</button>
                   </div>
+                </div>
               </li>
             </ul>
             <div>

@@ -10,6 +10,12 @@ var fetchComments = function () {
      });
 };
 
+var fetchUsers = function () {
+     return fetch('http://localhost:8080/users').then(function (response) {
+          return response.json();
+     });
+};
+
 const app = new Vue({
   el: "#app",
   data: {
@@ -31,6 +37,7 @@ const app = new Vue({
     createPost: function () {
       if (!this.newPost.body) {
         alert("Post cannot be empty!")
+        return
       } else{
         sendData(this.newPost);
         this.newPost = "";
@@ -45,10 +52,18 @@ const app = new Vue({
       }
     },
     delPost: function (post) {
-      deletePost(post._id);
+      if (confirm ("Are you sure you want to delete this post?")) {
+        deletePost(post._id);
+      } else {
+        return
+      }
     },
     delComment: function (comment) {
-      deleteComment(comment._id)
+      if (confirm ("Are you sure you want to delete this comment?")) {
+        deleteComment(comment._id);
+      } else {
+        return
+      }
     },
     toggleEdit: function (post) {
       if (post.editing) {
@@ -61,12 +76,17 @@ const app = new Vue({
       // this.editing = !this.editing;
       // console.log(this.editing)
     },
-    addLike: function (post) {
-      // newLike(post._id)
-      postDate();
+    addPostLike: function (post) {
+        newPostLike(post._id)
     },
-    addDislike: function (post) {
-      newDislike(post._id)
+    addPostDislike: function (post) {
+      newPostDislike(post._id)
+    },
+    addCommentLike: function (comment) {
+        newCommentLike(comment._id)
+    },
+    addCommentDislike: function (comment) {
+      newCommentDislike(comment._id)
     }
   },
   created: function () {
@@ -75,6 +95,9 @@ const app = new Vue({
     });
     fetchComments().then(function (comments) {
       app.comments = comments;
+    });
+    fetchUsers().then(function (users) {
+      app.users = users;
     });
   }
 });
@@ -90,7 +113,7 @@ var formatDate = function (date) {
     var day = date.getDate();
     var monthIndex = date.getMonth();
 
-    return monthNames[monthIndex] + ' ' + day  ;
+    return monthNames[monthIndex] + ' ' + day;
 };
 
 
@@ -170,7 +193,7 @@ var deleteComment = function (id) {
   })
 }
 
-var newLike = function (id) {
+var newPostLike = function (id) {
   var encodedBody = 'like=' + "like";
   fetch('http://localhost:8080/posts/' + id, {
     body: encodedBody,
@@ -189,7 +212,7 @@ var newLike = function (id) {
   })
 };
 
-var newDislike = function (id) {
+var newPostDislike = function (id) {
   var encodedBody = 'dislike=' + "dislike";
   fetch('http://localhost:8080/posts/' + id, {
     body: encodedBody,
@@ -201,6 +224,44 @@ var newDislike = function (id) {
     if (response.status == 202) {
       fetchPosts().then(function (data) {
         app.posts = data;
+      });
+    } else {
+      console.log ("Error Code:", response.status);
+    };
+  })
+};
+
+var newCommentLike = function (id) {
+  var encodedBody = 'like=' + "like";
+  fetch('http://localhost:8080/comments/' + id, {
+    body: encodedBody,
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  }).then(function (response) {
+    if (response.status == 202) {
+      fetchComments().then(function (data) {
+        app.comments = data;
+      });
+    } else {
+      console.log ("Error Code:", response.status);
+    };
+  })
+};
+
+var newCommentDislike = function (id) {
+  var encodedBody = 'dislike=' + "dislike";
+  fetch('http://localhost:8080/comments/' + id, {
+    body: encodedBody,
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  }).then(function (response) {
+    if (response.status == 202) {
+      fetchComments().then(function (data) {
+        app.comments = data;
       });
     } else {
       console.log ("Error Code:", response.status);
