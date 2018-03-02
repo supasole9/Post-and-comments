@@ -127,7 +127,7 @@ var formatDate = function (date) {
 var sendData = function (postBody) {
   console.log("Creating Post");
   var encodedBody = 'postBody=' + postBody.body + "&created=" + formatDate(new Date());;
-  fetch('http://localhost:8080/posts', {
+  fetch('https://gentle-meadow-22559.herokuapp.com/posts', {
     body: encodedBody,
     method: 'POST',
     headers: {
@@ -147,7 +147,7 @@ var sendData = function (postBody) {
 var sendComment = function (id, commentBody) {
   console.log("creating comment");
   var encodedBody = 'commentBody=' + commentBody + '&post_id=' + id + "&created=" + formatDate(new Date());
-  fetch('http://localhost:8080/comments', {
+  fetch('https://gentle-meadow-22559.herokuapp.com/comments', {
     body: encodedBody,
     method: 'POST',
     headers: {
@@ -167,7 +167,7 @@ var sendComment = function (id, commentBody) {
 };
 
 var deletePost = function (id) {
-  fetch('http://localhost:8080/posts/'+ id, {
+  fetch('https://gentle-meadow-22559.herokuapp.com/posts/'+ id, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -184,7 +184,7 @@ var deletePost = function (id) {
 };
 
 var deleteComment = function (id) {
-  fetch('http://localhost:8080/comments/'+ id, {
+  fetch('https://gentle-meadow-22559.herokuapp.com/comments/'+ id, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -202,7 +202,7 @@ var deleteComment = function (id) {
 
 var newPostLike = function (id) {
   var encodedBody = 'like=' + "like";
-  fetch('http://localhost:8080/posts/' + id, {
+  fetch('https://gentle-meadow-22559.herokuapp.com/posts/' + id, {
     body: encodedBody,
     method: 'PUT',
     headers: {
@@ -221,7 +221,7 @@ var newPostLike = function (id) {
 
 var newPostDislike = function (id) {
   var encodedBody = 'dislike=' + "dislike";
-  fetch('http://localhost:8080/posts/' + id, {
+  fetch('https://gentle-meadow-22559.herokuapp.com/posts/' + id, {
     body: encodedBody,
     method: 'PUT',
     headers: {
@@ -240,7 +240,7 @@ var newPostDislike = function (id) {
 
 var newCommentLike = function (id) {
   var encodedBody = 'like=' + "like";
-  fetch('http://localhost:8080/comments/' + id, {
+  fetch('https://gentle-meadow-22559.herokuapp.com/comments/' + id, {
     body: encodedBody,
     method: 'PUT',
     headers: {
@@ -259,7 +259,7 @@ var newCommentLike = function (id) {
 
 var newCommentDislike = function (id) {
   var encodedBody = 'dislike=' + "dislike";
-  fetch('http://localhost:8080/comments/' + id, {
+  fetch('https://gentle-meadow-22559.herokuapp.com/comments/' + id, {
     body: encodedBody,
     method: 'PUT',
     headers: {
