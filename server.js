@@ -7,6 +7,8 @@ var commentModel = require("./model/comment");
 
 const app = express();
 
+app.set('post', (process.env.PORT || 8080));
+
 app.use(bodyParser.urlencoded( { extended : false } ));
 app.use(express.static("front"));
 
@@ -133,6 +135,6 @@ app.put("/posts/:postId", function (req, res) {
   })
 });
 
-app.listen(process.PORT.env | 8080, function () {
+app.listen(app.get('port'), function () {
      console.log("Server is ready and listening");
 });
