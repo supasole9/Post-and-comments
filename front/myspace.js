@@ -1,17 +1,17 @@
 var fetchPosts = function () {
-     return fetch('https://gentle-meadow-22559.herokuapp.com/').then(function (response) {
+     return fetch('https://gentle-meadow-22559.herokuapp.com/posts').then(function (response) {
           return response.json();
      });
 };
 
 var fetchComments = function () {
-     return fetch('https://gentle-meadow-22559.herokuapp.com/').then(function (response) {
+     return fetch('https://gentle-meadow-22559.herokuapp.com/comments').then(function (response) {
           return response.json();
      });
 };
 
 var fetchUsers = function () {
-     return fetch('https://gentle-meadow-22559.herokuapp.com/').then(function (response) {
+     return fetch('https://gentle-meadow-22559.herokuapp.com/users').then(function (response) {
           return response.json();
      });
 };
