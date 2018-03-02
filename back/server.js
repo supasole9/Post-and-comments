@@ -8,6 +8,7 @@ var commentModel = require("./model/comment");
 const app = express();
 
 app.use(bodyParser.urlencoded( { extended : false } ));
+app.use(express.static("front"));
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -132,6 +133,6 @@ app.put("/posts/:postId", function (req, res) {
   })
 });
 
-app.listen(8080, function () {
+app.listen(process.PORT.env | 8080, function () {
      console.log("Server is ready and listening");
 });
