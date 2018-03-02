@@ -6,11 +6,11 @@ mongoose.connect("mongodb://test:dummy@ds235418.mlab.com:35418/myspace");
 const postSchema = new Schema ({
   belongs_to: {
     type: String,
-    required: true
+    required: [true, "Everything that is said can and will be used against you. A used id is required"]
   },
   body: {
     type: String,
-    required: [true, "Body text is required"]
+    required: [true, "Body text is required because no one cannot not say nothing"]
   },
   likes: {
     type: Number,
@@ -22,7 +22,7 @@ const postSchema = new Schema ({
   },
   created: {
     type: String,
-    required: true
+    required: [true, "a Date is required. We will clone you and your habits, then fire your from your job because you created what will replace you. Thank you."]
   }
 });
 

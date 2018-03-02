@@ -43,6 +43,17 @@ app.post("/users", function(req, res) {
   });
   user.save().then(function () {
     res.status(201).json(user);
+  }, function (err) {
+    if (err.errors) {
+      var messages = {}
+      for (var e in err.errors) {
+        messages[e] = err.errors[e].message;
+      }
+      res.status(422).json(messages);
+    }
+    else {
+      res.sendStatus(500)
+    }
   })
 });
 
@@ -55,6 +66,17 @@ app.post("/comments", function(req, res) {
   });
   comment.save().then(function () {
     res.status(201).json(comment);
+  }, function (err) {
+    if (err.errors) {
+      var messages = {}
+      for (var e in err.errors) {
+        messages[e] = err.errors[e].message;
+      }
+      res.status(422).json(messages);
+    }
+    else {
+      res.sendStatus(500)
+    }
   })
 });
 
@@ -66,6 +88,17 @@ app.post("/posts", function(req, res) {
   });
   post.save().then(function () {
     res.status(201).json(post);
+  }, function (err) {
+    if (err.errors) {
+      var messages = {}
+      for (var e in err.errors) {
+        messages[e] = err.errors[e].message;
+      }
+      res.status(422).json(messages);
+    }
+    else {
+      res.sendStatus(500)
+    }
   })
 });
 
