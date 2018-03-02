@@ -7,7 +7,7 @@ var commentModel = require("./model/comment");
 
 const app = express();
 
-app.set('post', (process.env.PORT || 8080));
+app.set('port', (process.env.PORT || 8080));
 
 app.use(bodyParser.urlencoded( { extended : false } ));
 app.use(express.static("front"));
