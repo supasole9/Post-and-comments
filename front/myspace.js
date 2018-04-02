@@ -19,6 +19,7 @@ var fetchUsers = function () {
 const app = new Vue({
   el: "#app",
   data: {
+    loggedIn: true,
     users: [],
       posts: [],
     comments: [],

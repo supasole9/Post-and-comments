@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="./style.css">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
-  <title>Myspace</title>
+  <title>Facebook</title>
 </head>
 <body>
 <div id="app">
@@ -20,7 +20,7 @@
       <button type="button" v-on:click="createPost">submit</button>
     </div>
   </div>
-  <div id="main">
+  <div id="main" v-if="loggedIn">
     <div class="wrapper" id="main-section">
       <div id="post-section">
         <ul class="threads">
@@ -81,6 +81,10 @@
         </ul>
       </div>
     </div>
+  </div>
+  <div v-else>
+  <input type="text" v-model="this.email" placeholder="Email">
+  <input type="text" v-model="this.password" placeholder="Password">
   </div>
 </div>
 <script src="vue.js"></script>
