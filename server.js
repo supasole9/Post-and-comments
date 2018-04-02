@@ -113,7 +113,7 @@ app.post("/users", function(req, res) {
 
 app.post("/comments", function(req, res) {
   var comment = new commentModel.Comment ({
-    belongs_to: "5a97700d470a8a1aa589e0ce",
+    belongs_to: req.user._id,
     post_id: req.body.post_id,
     body: req.body.commentBody,
     created: req.body.created
@@ -136,7 +136,7 @@ app.post("/comments", function(req, res) {
 
 app.post("/posts", function(req, res) {
   var post = new postModel.Post ({
-    belongs_to: "5a97700d470a8a1aa589e0ce",
+    belongs_to: req.user._id,
     body: req.body.postBody,
     created: req.body.created
   });
