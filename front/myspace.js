@@ -13,8 +13,10 @@ var fetchComments = function () {
      });
 };
 
-var fetchUsers = function () {
-     return fetch(urlstuff + '/me').then(function (response) {
+var fetchUser = function () {
+     return fetch(urlstuff + '/me', {
+       credentials: "include"
+     }).then(function (response) {
           return response.json();
      });
 };
@@ -119,10 +121,10 @@ var userLogIn = function (user) {
     method: "POST",
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
-    }
+    },
   }).then (function (res) {
     if (res.status == 201) {
-      fetchUsers().then(function (user) {
+      fetchUser().then(function (user) {
         app.user = user;
         app.loggedIn = true;
       });

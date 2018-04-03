@@ -1,6 +1,5 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const cors = require('cors');
 const session = require("express-session");
 const passport = require("passport");
 const passportLocal = require("passport-local");
@@ -21,7 +20,6 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
   next();
 });
-app.use(cors({credentials: true, origin: true }));
 app.use(session({secret: "deezBIGnuts", resave: false, saveUninitialized: true}));
 app.use(passport.initialize());
 app.use(passport.session());
