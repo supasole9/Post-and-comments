@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const cors = require('cors');
 const session = require("express-session");
 const passport = require("passport");
 const passportLocal = require("passport-local");
@@ -13,12 +14,14 @@ const app = express();
 app.set('port', (process.env.PORT || 8080));
 
 app.use(bodyParser.urlencoded( { extended : false } ));
+app.use(bodyParser.json())
 app.use(express.static("front"));
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
   next();
 });
+app.use(cors({credentials: true, origin: true }));
 app.use(session({secret: "deezBIGnuts", resave: false, saveUninitialized: true}));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -55,7 +58,6 @@ passport.deserializeUser(function(id, done) {
 })
 
 app.post("/session", passport.authenticate("local"), function (req,res) {
-  console.log(req);
   res.sendStatus(201);
 });
 
@@ -65,8 +67,7 @@ app.get("/me", function(req, res) {
   } else {
     res.sendStatus(401);
   }
-})
-
+});
 
 app.get("/posts", function (req, res) {
   postModel.Post.find().then(function (posts) {
@@ -226,7 +227,7 @@ app.put("/posts/:postId", function (req, res) {
 app.listen(app.get('port'), function () {
      console.log("Server is ready and listening");
 });
-//
+
 // app.listen(8080, function () {
 //      console.log("Server is ready and listening");
 // });

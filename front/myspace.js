@@ -113,7 +113,7 @@ const app = new Vue({
 });
 
 var userLogIn = function (user) {
-  var encodedBody = "email=" + user.email + "password=" + user.password;
+  var encodedBody = "email=" + user.email + "&password=" + user.password;
   fetch( urlstuff + "/session" , {
     body: encodedBody,
     method: "POST",
