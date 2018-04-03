@@ -28,8 +28,8 @@
             <div class="post-div">
               <img src="./images/profile.png" style="height: 50px; width: auto" alt="profile">
               <div class="post-owner">
-                <div v-for="user in users">
-                  <span v-if="user._id == post.belongs_to">{{ user.fname }} {{ user.lname }}</span>
+                <div>
+                  <span>{{ user.fname }} {{ user.lname }}</span>
                 </div>
                 <div class="created">{{ post.created }}</div>
                 <textarea v-if="post.editing"  v-model="post.body"> {{ post.body }}</textarea>
@@ -51,8 +51,8 @@
                 <div class="comment-div">
                   <img src="./images/profile.png" style="height: 50px; width: auto" alt="profile">
                   <div class="comment-owner">
-                    <div v-for="user in users">
-                      <span class="comment-owner-span" v-if="user._id == comment.belongs_to">{{ user.fname }} {{ user.lname }}</span>
+                    <div>
+                      <span class="comment-owner-span">{{ user.fname }} {{ user.lname }}</span>
                     </div>
                     <span class="comment-body-span">{{ comment.body }}</span>
                   </div>
@@ -83,8 +83,9 @@
     </div>
   </div>
   <div v-else>
-  <input type="text" v-model="this.email" placeholder="Email">
-  <input type="text" v-model="this.password" placeholder="Password">
+  <input type="text" v-model="user.email" placeholder="Email">
+  <input type="text" v-model="user.password" placeholder="Password">
+  <button v-on:click="logIn"></button>
   </div>
 </div>
 <script src="vue.js"></script>

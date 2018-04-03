@@ -1,17 +1,20 @@
+const urlstuff = "https://gentle-meadow-22559.herokuapp.com";
+// https://gentle-meadow-22559.herokuapp.com
+
 var fetchPosts = function () {
-     return fetch('https://gentle-meadow-22559.herokuapp.com/posts').then(function (response) {
+     return fetch(urlstuff + '/posts').then(function (response) {
           return response.json();
      });
 };
 
 var fetchComments = function () {
-     return fetch('https://gentle-meadow-22559.herokuapp.com/comments').then(function (response) {
+     return fetch(urlstuff + '/comments').then(function (response) {
           return response.json();
      });
 };
 
 var fetchUsers = function () {
-     return fetch('https://gentle-meadow-22559.herokuapp.com/users').then(function (response) {
+     return fetch(urlstuff + '/me').then(function (response) {
           return response.json();
      });
 };
@@ -19,8 +22,11 @@ var fetchUsers = function () {
 const app = new Vue({
   el: "#app",
   data: {
-    loggedIn: true,
-    users: [],
+    loggedIn: false,
+    user: {
+      email: "",
+      password: ""
+    },
       posts: [],
     comments: [],
     newUser: {
@@ -72,7 +78,6 @@ const app = new Vue({
       } else {
         post.editing = false;
       }
-      // post.editing = !post.editing;
       app.posts.forEach((i, x) => {
         if(i._id == post._id){
           console.log("posts old", app.posts[x], post)
@@ -80,9 +85,6 @@ const app = new Vue({
           console.log("posts new", app.posts[x], post)
         }
       })
-      // app.posts._id[post._id]
-      // console.log(post);
-      // console.log(post.editing)
     },
     addPostLike: function (post) {
         newPostLike(post._id)
@@ -95,6 +97,9 @@ const app = new Vue({
     },
     addCommentDislike: function (comment) {
       newCommentDislike(comment._id)
+    },
+    logIn: function () {
+      userLogIn(this.user);
     }
   },
   created: function () {
@@ -104,11 +109,28 @@ const app = new Vue({
     fetchComments().then(function (comments) {
       app.comments = comments;
     });
-    fetchUsers().then(function (users) {
-      app.users = users;
-    });
   }
 });
+
+var userLogIn = function (user) {
+  var encodedBody = "email=" + user.email + "password=" + user.password;
+  fetch( urlstuff + "/session" , {
+    body: encodedBody,
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  }).then (function (res) {
+    if (res.status == 201) {
+      fetchUsers().then(function (user) {
+        app.user = user;
+        app.loggedIn = true;
+      });
+    } else {
+      console.log("Error logging in");
+    }
+  })
+}
 
 var formatDate = function (date) {
   var monthNames = [
@@ -128,7 +150,7 @@ var formatDate = function (date) {
 var sendData = function (postBody) {
   console.log("Creating Post");
   var encodedBody = 'postBody=' + postBody.body + "&created=" + formatDate(new Date());;
-  fetch('https://gentle-meadow-22559.herokuapp.com/posts', {
+  fetch(urlstuff + '/posts', {
     body: encodedBody,
     method: 'POST',
     headers: {
@@ -148,7 +170,7 @@ var sendData = function (postBody) {
 var sendComment = function (id, commentBody) {
   console.log("creating comment");
   var encodedBody = 'commentBody=' + commentBody + '&post_id=' + id + "&created=" + formatDate(new Date());
-  fetch('https://gentle-meadow-22559.herokuapp.com/comments', {
+  fetch(urlstuff + '/comments', {
     body: encodedBody,
     method: 'POST',
     headers: {
@@ -168,7 +190,7 @@ var sendComment = function (id, commentBody) {
 };
 
 var deletePost = function (id) {
-  fetch('https://gentle-meadow-22559.herokuapp.com/posts/'+ id, {
+  fetch(urlstuff + '/posts/'+ id, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -185,7 +207,7 @@ var deletePost = function (id) {
 };
 
 var deleteComment = function (id) {
-  fetch('https://gentle-meadow-22559.herokuapp.com/comments/'+ id, {
+  fetch(urlstuff + '/comments/'+ id, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -203,7 +225,7 @@ var deleteComment = function (id) {
 
 var newPostLike = function (id) {
   var encodedBody = 'like=' + "like";
-  fetch('https://gentle-meadow-22559.herokuapp.com/posts/' + id, {
+  fetch(urlstuff + '/posts/' + id, {
     body: encodedBody,
     method: 'PUT',
     headers: {
@@ -222,7 +244,7 @@ var newPostLike = function (id) {
 
 var newPostDislike = function (id) {
   var encodedBody = 'dislike=' + "dislike";
-  fetch('https://gentle-meadow-22559.herokuapp.com/posts/' + id, {
+  fetch(urlstuff + '/posts/' + id, {
     body: encodedBody,
     method: 'PUT',
     headers: {
@@ -241,7 +263,7 @@ var newPostDislike = function (id) {
 
 var newCommentLike = function (id) {
   var encodedBody = 'like=' + "like";
-  fetch('https://gentle-meadow-22559.herokuapp.com/comments/' + id, {
+  fetch(urlstuff + '/comments/' + id, {
     body: encodedBody,
     method: 'PUT',
     headers: {
@@ -260,7 +282,7 @@ var newCommentLike = function (id) {
 
 var newCommentDislike = function (id) {
   var encodedBody = 'dislike=' + "dislike";
-  fetch('https://gentle-meadow-22559.herokuapp.com/comments/' + id, {
+  fetch(urlstuff + '/comments/' + id, {
     body: encodedBody,
     method: 'PUT',
     headers: {
