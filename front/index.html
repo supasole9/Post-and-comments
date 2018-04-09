@@ -34,7 +34,7 @@
               <img src="./images/profile.png" style="height: 50px; width: auto" alt="profile">
               <div class="post-owner">
                 <div>
-                  <span>{{ post._id.fname }} {{ user.lname }}</span>
+                  <span>{{ post.belongs_to.fname }} {{ post.belongs_to.lname }}</span>
                 </div>
                 <div class="created">{{ post.created }}</div>
                 <textarea v-if="post.editing"  v-model="post.body"> {{ post.body }}</textarea>
@@ -47,7 +47,7 @@
                 <button type="button" v-on:click.once="addPostDislike(post)">{{ post.dislikes }} Dislike</button>
               </div>
               <div class="move-left">
-                <button type="button" v-on:click="delPost(post)">Delete</button>
+                <button type="button" v-on:click="delPost(post)" v-if="user.id == post.belongs_to._id">Delete</button>
                 <button type="button" v-on:click="toggleEdit(post)">Edit</button>
               </div>
             </div>
@@ -57,7 +57,7 @@
                   <img src="./images/profile.png" style="height: 50px; width: auto" alt="profile">
                   <div class="comment-owner">
                     <div>
-                      <span class="comment-owner-span">{{ user.fname }} {{ user.lname }}</span>
+                      <span class="comment-owner-span">{{ comment.belongs_to.fname }} {{ comment.belongs_to.lname }}</span>
                     </div>
                     <span class="comment-body-span">{{ comment.body }}</span>
                   </div>
@@ -71,7 +71,7 @@
                     <button type="button" v-on:click.once="addCommentDislike(comment)">{{ comment.dislikes }} Dislike</button>
                   </div>
                   <div class="move-left">
-                    <button type="button" v-on:click="delComment(comment)">Delete</button>
+                    <button type="button" v-on:click="delComment(comment)" v-if="user.id == comment.belongs_to._id">Delete</button>
                   </div>
                 </div>
               </li>

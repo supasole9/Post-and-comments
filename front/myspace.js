@@ -1,4 +1,4 @@
-const urlstuff = "https://gentle-meadow-22559.herokuapp.com";
+const urlstuff = "http://localhost:8080";
 // https://gentle-meadow-22559.herokuapp.com
 
 var fetchPosts = function () {
@@ -207,7 +207,6 @@ var formatDate = function (date) {
 
 
 var sendData = function (postBody) {
-  console.log("Creating Post");
   var encodedBody = 'postBody=' + postBody.body + "&created=" + formatDate(new Date());;
   fetch(urlstuff + '/posts', {
     body: encodedBody,
@@ -218,9 +217,9 @@ var sendData = function (postBody) {
     }
   }).then(function (response) {
     if (response.status == 201) {
-        response.json().then(function (data) {
-          app.posts.push(data)
-        });
+      fetchPosts().then(function (data) {
+        app.posts = data
+      });
     } else {
       console.log ("Error Code:", response.status);
     };
@@ -239,15 +238,13 @@ var sendComment = function (id, commentBody) {
     }
   }).then(function (response) {
     if (response.status == 201) {
-        response.json().then(function (data) {
-          app.comments.push(data)
-        });
+      fetchComments().then(function (data) {
+        app.comments = data
+      });
     } else {
       console.log ("Error Code:", response.status);
     };
-  }).then(fetchComments().then(function (data) {
-    app.comments = data
-  }));
+  })
 };
 
 var deletePost = function (id) {

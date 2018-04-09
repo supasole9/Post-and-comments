@@ -4,10 +4,10 @@ var Schema = mongoose.Schema;
 mongoose.connect("mongodb://test:dummy@ds235418.mlab.com:35418/myspace");
 
 const commentSchema = new Schema ({
-  user: {
+  belongs_to: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
-    // required: [true, "Everything that is said can and will be used against you. A used id is required"]
+    ref: 'User',
+    required: true
   },
   post_id: {
     type: String,
