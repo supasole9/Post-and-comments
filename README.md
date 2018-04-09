@@ -8,7 +8,7 @@ The purpose of this project was to challenge myself to play with relational data
     * belongs_to (which user created this comment) *required*
     * body *required*
     * created *required*
-    * likes 
+    * likes
     * dislikes
 
 * comment
@@ -22,15 +22,18 @@ The purpose of this project was to challenge myself to play with relational data
 * user
     * fname
     * lname
+    * email
+    * encrypted_password
 
 METHOD | PATH | Name
 ------ | ------- | --------
 GET | /posts | List posts
 GET | /comments | List comments
-GET | /users | List users
+GET | /me | Retrieve session data
 POST | /posts | Creates new post
 POST | /comments | Create new comment
 POST | /users | Create new user
+POST | /session | Create new session
 DELETE | /posts/:id | Deletes a post
 DELETE | /comments/:id | Deletes a comment
 PUT | /posts/:id | Updates post
