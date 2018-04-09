@@ -118,6 +118,10 @@ const app = new Vue({
     },
     signUp: function () {
       newsignUp(this.newUser);
+      this.newUser.fname = "";
+      this.newUser.lname = "";
+      this.newUser.email = "";
+      this.newUser.password = "";
     },
     logout: function () {
       userLogout();
@@ -183,7 +187,7 @@ var newsignUp = function (newUser) {
     },
   }).then (function (res) {
     if (res.status == 201) {
-      userLogIn(newUser)
+      userLogIn(newUser);
         } else {
           app.loggedIn = false;
           console.log("Error logging in");
