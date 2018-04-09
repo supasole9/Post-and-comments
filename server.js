@@ -10,7 +10,7 @@ var commentModel = require("./model/comment");
 
 const app = express();
 
-// app.set('port', (process.env.PORT || 8080));
+app.set('port', (process.env.PORT || 8080));
 
 app.use(bodyParser.urlencoded( { extended : false } ));
 app.use(bodyParser.json())
@@ -227,10 +227,10 @@ app.put("/posts/:postId", function (req, res) {
   })
 });
 
-// app.listen(app.get('port'), function () {
-//      console.log("Server is ready and listening");
-// });
-
-app.listen(8080, function () {
+app.listen(app.get('port'), function () {
      console.log("Server is ready and listening");
 });
+
+// app.listen(8080, function () {
+//      console.log("Server is ready and listening");
+// });
