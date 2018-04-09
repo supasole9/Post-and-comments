@@ -83,9 +83,26 @@
     </div>
   </div>
   <div v-else>
-  <input type="text" v-model="user.email" placeholder="Email">
-  <input type="text" v-model="user.password" placeholder="Password">
-  <button v-on:click="logIn"></button>
+    <h1>FaceBook Revised</h1>
+    <div id="not-user-section">
+      <div id="login-section">
+        <h2>Returning Users login</h2>
+        <input type="text" v-model="user.email" placeholder="Email">
+        <input type="password" v-model="user.password" placeholder="Password">
+        <button v-on:click="logIn">Login</button>
+        <div v-if="signInError" id="signInError">
+          Sorry, That email and/or password is invalid
+        </div>
+      </div>
+      <div id="sign-up">
+        <h2>New User registrations</h2>
+        <input type="text" v-model="newUser.fname" placeholder="Please Enter First Name">
+        <input type="text" v-model="newUser.lname" placeholder="Please Enter last Name">
+        <input type="text" v-model="newUser.email" placeholder="Please enter an Email">
+        <input type="text" v-model="newUser.password" placeholder="Please enter a password">
+        <button v-on:click="signUp">Sign Up</button>
+      </div>
+    </div>
   </div>
 </div>
 <script src="vue.js"></script>

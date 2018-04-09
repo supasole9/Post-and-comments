@@ -1,4 +1,4 @@
-const urlstuff = "https://gentle-meadow-22559.herokuapp.com";
+const urlstuff = "http://localhost:8080";
 // https://gentle-meadow-22559.herokuapp.com
 
 var fetchPosts = function () {
@@ -15,6 +15,7 @@ var fetchComments = function () {
 
 var fetchUser = function () {
      return fetch(urlstuff + '/me', {
+       method: "GET",
        credentials: "include"
      }).then(function (response) {
           return response.json();
@@ -32,15 +33,18 @@ const app = new Vue({
       posts: [],
     comments: [],
     newUser: {
-      name: "",
-      body: "",
+      fname: "",
+      lname: "",
+      email: "",
+      password: ""
     },
     newPost: {
       body: ""
     },
     newComment: {
       body: ""
-    }
+    },
+    signInError: false
   },
   methods: {
     createPost: function () {
@@ -102,6 +106,9 @@ const app = new Vue({
     },
     logIn: function () {
       userLogIn(this.user);
+    },
+    signUp: function () {
+      newsignUp(this.newUser);
     }
   },
   created: function () {
@@ -111,6 +118,15 @@ const app = new Vue({
     fetchComments().then(function (comments) {
       app.comments = comments;
     });
+    fetchUser().then(function (user) {
+      if (user) {
+        app.user = user;
+        app.loggedIn = true;
+      } else {
+        app.user = user;
+        app.loggedIn = true;
+      }
+    })
   }
 });
 
@@ -119,20 +135,47 @@ var userLogIn = function (user) {
   fetch( urlstuff + "/session" , {
     body: encodedBody,
     method: "POST",
+    credentials: "include",
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     },
   }).then (function (res) {
     if (res.status == 201) {
       fetchUser().then(function (user) {
-        app.user = user;
-        app.loggedIn = true;
+        if (user) {
+          app.user = user;
+          app.loggedIn = true;
+        } else {
+          app.loggedIn = false;
+          console.log("Error logging in");
+        }
       });
     } else {
+      app.signInError = true;
+      app.loggedIn = false;
       console.log("Error logging in");
     }
   })
-}
+};
+
+var newsignUp = function (newUser) {
+  var encodedBody = "email=" + newUser.email + "&password=" + newUser.password + "&fname=" + newUser.fname + "&lname=" + newUser.lname;
+  fetch( urlstuff + "/users" , {
+    body: encodedBody,
+    method: "POST",
+    credentials: "include",
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+  }).then (function (res) {
+    if (res.status == 201) {
+      userLogIn(newUser)
+        } else {
+          app.loggedIn = false;
+          console.log("Error logging in");
+        }
+    });
+};
 
 var formatDate = function (date) {
   var monthNames = [

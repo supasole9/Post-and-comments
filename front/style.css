@@ -197,3 +197,33 @@ textarea{
   border-radius: 100px;
 
 }
+
+#login-section, #sign-up{
+  width: 35%;
+  display: flex;
+  flex-direction: column;
+}
+
+#login-section input, #sign-up input {
+  height: 25px;
+  padding: 15px 0 15px 5px;
+  margin: 15px;
+}
+
+#login-section button, #sign-up button {
+  height: 45px;
+  padding: 15px 0 15px;
+  margin: 15px;
+  border: 0;
+}
+
+#not-user-section{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+
+}
+
+#signInError {
+  color: red;
+}

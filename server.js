@@ -10,7 +10,7 @@ var commentModel = require("./model/comment");
 
 const app = express();
 
-app.set('port', (process.env.PORT || 8080));
+// app.set('port', (process.env.PORT || 8080));
 
 app.use(bodyParser.urlencoded( { extended : false } ));
 app.use(bodyParser.json())
@@ -67,6 +67,11 @@ app.get("/me", function(req, res) {
   }
 });
 
+app.delete("/session", function (req,res) {
+  req.logout();
+  res.sendStatus(200);
+})
+
 app.get("/posts", function (req, res) {
   postModel.Post.find().then(function (posts) {
    res.json(posts);
@@ -90,7 +95,7 @@ app.post("/users", function(req, res) {
   var user = new userModel.User ({
     fname: req.body.fname,
     lname: req.body.lname,
-    email: req.body.email,
+    email: req.body.email
   });
   user.setPassword(req.body.password, function () {
     user.save().then(function () {
@@ -222,10 +227,10 @@ app.put("/posts/:postId", function (req, res) {
   })
 });
 
-app.listen(app.get('port'), function () {
-     console.log("Server is ready and listening");
-});
-
-// app.listen(8080, function () {
+// app.listen(app.get('port'), function () {
 //      console.log("Server is ready and listening");
 // });
+
+app.listen(8080, function () {
+     console.log("Server is ready and listening");
+});
