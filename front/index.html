@@ -34,7 +34,7 @@
               <img src="./images/profile.png" style="height: 50px; width: auto" alt="profile">
               <div class="post-owner">
                 <div>
-                  <span>{{ user.fname }} {{ user.lname }}</span>
+                  <span>{{ post._id.fname }} {{ user.lname }}</span>
                 </div>
                 <div class="created">{{ post.created }}</div>
                 <textarea v-if="post.editing"  v-model="post.body"> {{ post.body }}</textarea>

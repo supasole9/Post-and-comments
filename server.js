@@ -10,7 +10,7 @@ var commentModel = require("./model/comment");
 
 const app = express();
 
-// app.set('port', (process.env.PORT || 8080));
+app.set('port', (process.env.PORT || 8080));
 
 app.use(bodyParser.urlencoded( { extended : false } ));
 app.use(bodyParser.json())
@@ -73,19 +73,24 @@ app.delete("/session", function (req,res) {
 })
 
 app.get("/posts", function (req, res) {
-  postModel.Post.find().then(function (posts) {
+  postModel.Post.find().populate("user").exec(function (err, posts) {
+    res.json(posts)
+  });
+});
+
+app.get("/comments", function (req, res) {
+  commentModel.Comment.find().populate("user").exec().then(function (posts) {
    res.json(posts);
  })
 });
 
-app.get("/comments", function (req, res) {
-  commentModel.Comment.find().then(function (posts) {
-   res.json(posts);
+app.get("/users", function (req, res) {
+  userModel.User.find().then(function (users) {
+   res.json(users);
  })
 });
 
 app.post("/users", function(req, res) {
-  console.log(req.body.password)
   var user = new userModel.User ({
     fname: req.body.fname,
     lname: req.body.lname,
@@ -112,7 +117,7 @@ app.post("/users", function(req, res) {
 
 app.post("/comments", function(req, res) {
   var comment = new commentModel.Comment ({
-    belongs_to: req.user.id,
+    user: userModel.User._id,
     post_id: req.body.post_id,
     body: req.body.commentBody,
     created: req.body.created
@@ -135,7 +140,7 @@ app.post("/comments", function(req, res) {
 
 app.post("/posts", function(req, res) {
   var post = new postModel.Post ({
-    belongs_to: req.user.id,
+    user: userModel.User._id,
     body: req.body.postBody,
     created: req.body.created
   });
@@ -221,10 +226,10 @@ app.put("/posts/:postId", function (req, res) {
   })
 });
 
-// app.listen(app.get('port'), function () {
-//      console.log("Server is ready and listening");
-// });
-
-app.listen(8080, function () {
+app.listen(app.get('port'), function () {
      console.log("Server is ready and listening");
 });
+//
+// app.listen(8080, function () {
+//      console.log("Server is ready and listening");
+// });

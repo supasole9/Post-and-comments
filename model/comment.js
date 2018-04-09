@@ -4,9 +4,10 @@ var Schema = mongoose.Schema;
 mongoose.connect("mongodb://test:dummy@ds235418.mlab.com:35418/myspace");
 
 const commentSchema = new Schema ({
-  belongs_to: {
-    type: String,
-    required: [true, "Everything that is said can and will be used against you. A used id is required"]
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+    // required: [true, "Everything that is said can and will be used against you. A used id is required"]
   },
   post_id: {
     type: String,
@@ -30,6 +31,6 @@ const commentSchema = new Schema ({
   }
 });
 
-var Comment = mongoose.model("Comments", commentSchema);
+var Comment = mongoose.model("Comment", commentSchema);
 
 module.exports = { Comment: Comment };

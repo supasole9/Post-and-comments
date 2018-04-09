@@ -46,6 +46,6 @@ userSchema.methods.simpleUser = function () {
   }
 }
 
-var User = mongoose.model("Users", userSchema);
+var User = mongoose.model("User", userSchema);
 
 module.exports = { User: User };

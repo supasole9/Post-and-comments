@@ -4,9 +4,10 @@ var Schema = mongoose.Schema;
 mongoose.connect("mongodb://test:dummy@ds235418.mlab.com:35418/myspace");
 
 const postSchema = new Schema ({
-  belongs_to: {
-    type: String,
-    required: [true, "Everything that is said can and will be used against you. A used id is required"]
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',  
+    required: true
   },
   body: {
     type: String,
@@ -26,6 +27,5 @@ const postSchema = new Schema ({
   }
 });
 
-var Post = mongoose.model("Posts", postSchema)
-
+var Post = mongoose.model("Post", postSchema)
 module.exports = { Post: Post };

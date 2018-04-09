@@ -1,4 +1,4 @@
-const urlstuff = "http://localhost:8080";
+const urlstuff = "https://gentle-meadow-22559.herokuapp.com";
 // https://gentle-meadow-22559.herokuapp.com
 
 var fetchPosts = function () {
