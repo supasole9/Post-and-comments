@@ -64,10 +64,10 @@ li{
 textarea{
   height: 50px;
   padding: 5px;
-  width: 50%;
+  width: 80%;
   resize: none;
   border: 0;
-  border-radius: 5px;
+  margin-right: 15px;
 }
 
 .thread{
@@ -90,6 +90,19 @@ textarea{
   background-color: #91AAB4;
   display: flex;
 }
+
+#postarea{
+  display: flex;
+  align-items: center;
+  text-align: center;
+  width: 600px;
+}
+
+#postarea span{
+  color: red;
+  font-size: .7rem;
+}
+
 
 .post-owner div{
   margin-bottom: 3px;

@@ -10,7 +10,7 @@ var commentModel = require("./model/comment");
 
 const app = express();
 
-app.set('port', (process.env.PORT || 8080));
+// app.set('port', (process.env.PORT || 8080));
 
 app.use(bodyParser.urlencoded( { extended : false } ));
 app.use(bodyParser.json())
@@ -84,12 +84,6 @@ app.get("/comments", function (req, res) {
  })
 });
 
-app.get("/users", function (req, res) {
-  userModel.User.find().then(function (users) {
-   res.json(users);
- })
-});
-
 app.post("/users", function(req, res) {
   console.log(req.body.password)
   var user = new userModel.User ({
@@ -118,7 +112,7 @@ app.post("/users", function(req, res) {
 
 app.post("/comments", function(req, res) {
   var comment = new commentModel.Comment ({
-    belongs_to: req.user._id,
+    belongs_to: req.user.id,
     post_id: req.body.post_id,
     body: req.body.commentBody,
     created: req.body.created
@@ -141,7 +135,7 @@ app.post("/comments", function(req, res) {
 
 app.post("/posts", function(req, res) {
   var post = new postModel.Post ({
-    belongs_to: req.user._id,
+    belongs_to: req.user.id,
     body: req.body.postBody,
     created: req.body.created
   });
@@ -227,10 +221,10 @@ app.put("/posts/:postId", function (req, res) {
   })
 });
 
-app.listen(app.get('port'), function () {
-     console.log("Server is ready and listening");
-});
-
-// app.listen(8080, function () {
+// app.listen(app.get('port'), function () {
 //      console.log("Server is ready and listening");
 // });
+
+app.listen(8080, function () {
+     console.log("Server is ready and listening");
+});

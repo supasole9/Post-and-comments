@@ -13,11 +13,16 @@
   <div id="header">
     <div class="wrapper" id="header-section">
       <div id="header-profile">
-        <img src="./images/profile.png" style="height: 50px; width: auto" alt="profile">
-        <span id="user-name">Hello Ross!</span>
+        <h1 v-if="!loggedIn">Book of Faces</h1>
+        <img src="./images/profile.png" style="height: 50px; width: auto" alt="profile" v-if="loggedIn">
+        <span id="user-name" v-if="loggedIn">Hello {{ user.fname }}!</span>
       </div>
-      <textarea placeholder="New Post Here" v-model="newPost.body"></textarea>
-      <button type="button" v-on:click="createPost">submit</button>
+      <div id="postarea">
+        <textarea placeholder="New Post Here" v-model="newPost.body" v-if="loggedIn"></textarea>
+        <button type="button" v-on:click="createPost" v-if="loggedIn">submit</button>
+        <span v-if="postError">Boring Post. Fill it with something!</span>
+      </div>
+      <button type="button" v-on:click="logout" v-if="loggedIn">logout</button>
     </div>
   </div>
   <div id="main" v-if="loggedIn">
@@ -83,7 +88,6 @@
     </div>
   </div>
   <div v-else>
-    <h1>FaceBook Revised</h1>
     <div id="not-user-section">
       <div id="login-section">
         <h2>Returning Users login</h2>

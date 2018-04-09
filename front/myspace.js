@@ -1,4 +1,4 @@
-const urlstuff = "https://gentle-meadow-22559.herokuapp.com";
+const urlstuff = "http://localhost:8080";
 // https://gentle-meadow-22559.herokuapp.com
 
 var fetchPosts = function () {
@@ -20,6 +20,13 @@ var fetchUser = function () {
      }).then(function (response) {
           return response.json();
      });
+};
+
+var userLogout = function () {
+  fetch(urlstuff + '/session', {
+    method: 'DELETE',
+    credentials: 'include'
+  });
 };
 
 const app = new Vue({
@@ -44,16 +51,18 @@ const app = new Vue({
     newComment: {
       body: ""
     },
-    signInError: false
+    signInError: false,
+    postError: false
   },
   methods: {
     createPost: function () {
       if (!this.newPost.body) {
-        alert("Post cannot be empty!")
+        this.postError = true;
         return
       } else{
         sendData(this.newPost);
         this.newPost.body = "";
+        this.postError = false;
       }
     },
     createComment: function (post) {
@@ -109,6 +118,11 @@ const app = new Vue({
     },
     signUp: function () {
       newsignUp(this.newUser);
+    },
+    logout: function () {
+      userLogout();
+      this.loggedIn = false;
+      this.user = {};
     }
   },
   created: function () {
@@ -198,6 +212,7 @@ var sendData = function (postBody) {
   fetch(urlstuff + '/posts', {
     body: encodedBody,
     method: 'POST',
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     }
@@ -218,6 +233,7 @@ var sendComment = function (id, commentBody) {
   fetch(urlstuff + '/comments', {
     body: encodedBody,
     method: 'POST',
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     }
@@ -237,6 +253,7 @@ var sendComment = function (id, commentBody) {
 var deletePost = function (id) {
   fetch(urlstuff + '/posts/'+ id, {
     method: 'DELETE',
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     }
@@ -254,6 +271,7 @@ var deletePost = function (id) {
 var deleteComment = function (id) {
   fetch(urlstuff + '/comments/'+ id, {
     method: 'DELETE',
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     }
@@ -273,6 +291,7 @@ var newPostLike = function (id) {
   fetch(urlstuff + '/posts/' + id, {
     body: encodedBody,
     method: 'PUT',
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     }
@@ -292,6 +311,7 @@ var newPostDislike = function (id) {
   fetch(urlstuff + '/posts/' + id, {
     body: encodedBody,
     method: 'PUT',
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     }
@@ -330,6 +350,7 @@ var newCommentDislike = function (id) {
   fetch(urlstuff + '/comments/' + id, {
     body: encodedBody,
     method: 'PUT',
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     }
