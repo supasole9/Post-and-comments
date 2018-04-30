@@ -3,6 +3,9 @@
 # Facebook 1.0 <h3>
 The purpose of this project was to challenge myself to play with relational data concepts/structures. Using Vuejs, Node(Express), Mongoose(Mongodb) to complete a full-stack app. Resources are *Posts* and *Comments*. At the moment, you are allowed to create posts and respond to each post using comments.
 
+**Link to working app:**
+https://gentle-meadow-22559.herokuapp.com/
+
 * post
     * belongs_to (which user created this comment) *required*
     * body *required*
