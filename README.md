@@ -1,4 +1,3 @@
-# Midterm Project <h1>
 # Posts and Comments <h2>
 
 # Facebook 1.0 <h3>
